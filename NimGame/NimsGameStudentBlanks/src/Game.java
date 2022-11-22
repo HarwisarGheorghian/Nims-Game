@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.lang.Math;
 public class Game {
@@ -20,7 +21,14 @@ public class Game {
     public int takePiece(){
         System.out.println("There are "+ pieces+" remaining!");
         Scanner sc = new Scanner(System.in);
-        int take = sc.nextInt();
+        int take = 0;
+        try{
+            take = sc.nextInt();
+        } catch(InputMismatchException e){
+            System.out.println("You entered an incorrect integer");
+            takePiece();
+        }
+        
        //TO DO: Grab the user amount of pieces and repeat if it not allowed.
         while (!isLegal(take)){
             System.out.println("You cannot this amount of pieces");
@@ -29,7 +37,6 @@ public class Game {
         //TO DO: Adjust the pieces
         pieces -= take;
         currentPlayer.adjustScore(take);
-        System.out.println("There are "+ pieces+" remaining!");
         System.out.println("-----------------------");
         return take;
     }
